@@ -1,0 +1,16 @@
+import random
+data = [random.randint(0,1000)for i in range(0,100)]
+print("This is your data ")
+print(data)
+size = len(data)
+swapped = True
+while swapped == True:
+    swapped = False
+    for index in range(0,size-1):
+        if data[index + 1] < data[index]:
+            temp  = data[index]
+            data[index] = data[index + 1]
+            data[index + 1] = temp
+            swapped = True
+print("This is your sorted data ")
+print (data)
