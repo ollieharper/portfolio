@@ -1,1 +1,294 @@
+import time
+import urllib
+import datetime
+from tkinter import *
+import webbrowser
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
+driver = webdrive.Chrome('P:\oharper45\Downloads\python\chromedriver')
 
+"""
+name = input("Name: ")
+email = input("Email: ")
+phone = input("Phone: ")
+billing = input("Billing: ")
+pcode = input("Postcode: ")
+city = input("City: ")
+cc = input("CC: ")
+ccm = input("Month: ")
+ccy = input("Year: ")
+cvv = input("CVV: ")
+refresh = int(input("Refresh time: "))
+username = input("Username: ")
+password = input("Password: ")
+"""
+
+def category():
+    #new
+    if Acategory.get() == ("new"):
+        driver.get('https://www.supremenewyork.com/shop/new')
+        
+    #jackets
+    if Acategory == ("jackets"):
+        driver.get('https://www.supremenewyork.com/shop/all/jackets')
+        
+    #shirts
+    if Acategory.get() == ("shirts"):
+        driver.get('https://www.supremenewyork.com/shop/all/shirts')
+
+    #sweaters
+    if Acategory.get() == ("sweaters"):
+        driver.get('https://www.supremenewyork.com/shop/all/tops_sweaters')
+
+    #pants    
+    if Acategory.get() == ("pants"):
+        driver.get('https://www.supremenewyork.com/shop/all/pants')
+
+    #shorts
+    if Acategory.get() == ("shorts"):
+        driver.get('https://www.supremenewyork.com/shop/all/shorts')
+
+    #hats
+    if Acategory.get() == ("hats"):
+        driver.get('https://www.supremenewyork.com/shop/all/hats')
+
+    #bags
+    if Acategory.get() == ("bags"):
+        driver.get('https://www.supremenewyork.com/shop/all/bags')
+
+    #accessories
+    if Acategory.get() == ("accessories"):
+        driver.get('https://www.supremenewyork.com/shop/all/accessories')
+
+    #skate
+    if Acategory.get() == ("skate"):
+        driver.get('https://www.supremenewyork.com/shop/all/skate')
+    else:
+        print ("Error")
+
+def driver():
+    global driver
+    driver = webdriver.Chrome('C:/Users/OHarper45/Documents/chromedriver')
+
+def chromeLogin():
+    driver.get('https://accounts.google.com/signin/chrome/sync/identifier?ssp=1&continue=https%3A%2F%2Fwww.google.com%2F&flowName=GlifDesktopChromeSync')
+    time.sleep(5)
+    Busername = Ausername.get()
+    Bpassword = Apassword.get()
+    driver.find_element_by_name("identifier").send_keys(Busername)
+    driver.find_element_by_id("identifierNext").click()
+    time.sleep(2)
+    driver.find_element_by_name("password").send_keys(Bpassword)
+    
+    driver.find_element_by_id("passwordNext").click()
+
+//supreme website
+def signup():
+    driver.get("https://london.supremenewyork.com")
+    while True:
+        
+        try:
+            driver.find_element_by_id("customer_name")
+                    #name
+            driver.find_element_by_id("customer_name").send_keys(name)
+
+                    #email
+            driver.find_element_by_id("customer_email").send_keys(email)
+
+                    #phone
+            driver.find_element_by_id("customer_tel").send_keys(phone)
+
+                    #continue button
+            driver.find_element_by_id("step_1_button").click()
+
+                    ###Wait for p2###
+            waitBis = wait.until(EC.visibility_of_element_located((By.ID, "customer_street")))
+                
+                    #billing addy
+            driver.find_element_by_id("customer_street").send_keys(billing)
+
+                    #post code
+            driver.find_element_by_id("customer_zip").send_keys(pcode)
+
+                    #city
+            driver.find_element_by_id("customer_city").send_keys(city)
+
+                    #cc number
+            driver.find_element_by_id("cn").send_keys(cc)
+
+                    #cc month
+            selectMonth= Select(driver.find_element_by_id('credit_card_month'))
+            selectMonth.select_by_visible_text('ccm')
+
+                    #cc year
+            selectYear= Select(driver.find_element_by_id('credit_card_year'))
+            selectYear.select_by_visible_text('ccy')
+
+                    #cvv
+            driver.find_element_by_id("credit_card_verification_value").send_keys(cvv)
+
+                    #complete
+            driver.find_element_by_id("submit_button").click
+            #find element to check if website has loaded
+              
+            break
+        except (NoSuchElementException):
+            time.sleep(int(Arefresh.get()))
+            wait = WebDriverWait(driver, 3)
+            waitBis = wait.until(EC.visibility_of_element_located((By.ID, "time-zone-name")))
+            driver.refresh()
+            print("Waiting for page to load...")
+
+
+def itemfinder():
+    category()
+    while True:
+        try:
+           driver.find_element_by_partial_text((str(Akeyword.get()))).click()
+           autofill()
+           break
+        except (NoSuchElementException):
+            time.sleep(int(Arefresh.get()))
+            wait = WebDriverWait(driver, 3)
+            waitBis = wait.until(EC.visibility_of_element_located((By.ID, "time-zone-name")))
+            driver.refresh()
+            print("Waiting for item to load...")
+
+#GUI
+root = Tk()
+
+#labels
+name = Label(root, text="Name:")
+email = Label(root, text="Email:")
+phone = Label(root, text="Phone number:")
+billing = Label(root, text="Billing address:")
+postcode = Label(root, text="Postcode:")
+city = Label(root, text="City:")
+cc = Label(root, text="Card number:")
+ccm = Label(root, text="Expiry month:")
+ccy = Label(root, text="Expiry year:")
+ccv = Label(root, text="CVV:")
+refresh = Label(root, text="Refresh time:")
+username = Label(root, text="Gmail username:")
+password = Label(root, text="Password:")
+refresh = Label(root, text="Refresh Time: ")
+category = Label(root, text="Category: ")
+keyword = Label(root, text="Keyword: ")
+
+
+#formatting labels
+name.grid(row=0, sticky=W)
+email.grid(row=1, sticky=W)
+phone.grid(row=2, sticky=W)
+billing.grid(row=3, sticky=W)
+postcode.grid(row=4, sticky=W)
+city.grid(row=5, sticky=W)
+cc.grid(row=6, sticky=W)
+ccm.grid(row=7, sticky=W)
+ccy.grid(row=8, sticky=W)
+ccv.grid(row=9, sticky=W)
+username.grid(row=10, sticky=W)
+password.grid(row=11, sticky=W)
+category.grid(row=12, sticky=W)
+refresh.grid(row=13, sticky=W)
+keyword.grid(row=14, sticky=W)
+
+
+
+#text boxes
+Aname = Entry(root)
+Aemail = Entry(root)
+Aphone = Entry(root)
+Abilling = Entry(root)
+Apostcode = Entry(root)
+Acity = Entry(root)
+Acc = Entry(root)
+Accm = Entry(root)
+Accy = Entry(root)
+Accv = Entry(root)
+Ausername = Entry(root)
+Apassword = Entry(root, show="*")
+Acategory = Entry(root)
+Arefresh = Entry(root)
+Akeyword = Entry(root)
+
+
+#formatting text boxes
+Aname.grid(row=0, column=1)
+Aemail.grid(row=1, column=1)
+Aphone.grid(row=2, column=1)
+Abilling.grid(row=3, column=1)
+Apostcode.grid(row=4, column=1)
+Acity.grid(row=5, column=1)
+Acc.grid(row=6, column=1)
+Accm.grid(row=7, column=1)
+Accy.grid(row=8, column=1)
+Accv.grid(row=9, column=1)
+Ausername.grid(row=10, column=1)
+Apassword.grid(row=11, column=1)
+Acategory.grid(row=12, column=1)
+Arefresh.grid(row=13, column=1)
+Akeyword.grid(row=14, column=1)
+
+
+#buttons
+
+loginButton = Button(root, text="LOGIN TO CHROME", command=chromeLogin)
+signupButton = Button(root, text="Sign-Up Bot", command=signup)
+supremeButton = Button(root, text="Supreme Bot", command=itemfinder)
+driverButton = Button(root, text="CLICK TO START CHROME", command=driver)
+
+#formatting buttons
+loginButton.grid(row=11, column=2)
+signupButton.grid(row=13, column=2)
+supremeButton.grid(row=14, column=2)
+driverButton.grid(row=15, column=1)
+
+root.mainloop()      
+
+// store line sign up
+driver.get
+driver.find_element_by_id("customer_name").send_keys(name)
+
+    #email
+driver.find_element_by_id("customer_email").send_keys(email)
+
+    #phone
+driver.find_element_by_id("customer_tel").send_keys(phone)
+
+    #continue button
+driver.find_element_by_id("step_1_button").click()
+
+    ###Wait for p2###
+waitBis = wait.until(EC.visibility_of_element_located((By.ID, "customer_street")))
+
+    #billing addy
+driver.find_element_by_id("customer_street").send_keys(billing)
+
+    #post code
+driver.find_element_by_id("customer_zip").send_keys(pcode)
+
+
+    #city
+driver.find_element_by_id("customer_city").send_keys(city)
+
+    #cc number
+driver.find_element_by_id("cn").send_keys(cc)
+
+    #cc month
+selectMonth= Select(driver.find_element_by_id('credit_card_month'))
+selectMonth.select_by_visible_text('ccm')
+
+    #cc year
+selectYear= Select(driver.find_element_by_id('credit_card_year'))
+selectYear.select_by_visible_text('ccy')
+
+    #cvv
+driver.find_element_by_id("credit_card_verification_value").send_keys(cvv)
+
+    #complete
+driver.find_element_by_id("submit_button").click
